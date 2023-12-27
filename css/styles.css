@@ -1,0 +1,65 @@
+/* Header */
+header {
+  background-color: #666;
+  padding: 10px;
+  text-align: center;
+  font-size: 10px;
+  color: white;
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #777;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+#container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+#canvasContainer, #controls {
+    flex: 1; /* This makes each child of the container take equal space */
+    padding: 10px;
+    margin-top: 0px;
+}
+
+#canvasContainer {
+    text-align: right;
+}
+
+#controls {
+    /* Align text to the left */
+    text-align: left;
+    
+    /* Stack the child elements vertically */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align children to the start of the cross axis */
+    align-items: flex-start; /* Align children to the start of the main axis */
+    
+    /* You may want to add some padding or margin */
+    padding: 10px;
+    margin: 10px;
+}
+
+#controls input[type="text"],
+#controls input[type="file"],
+#controls button {
+    display: block; /* This will make each element take up its own line */
+    width: 100%; /* Each element will take the full width available */
+    margin-bottom: 20px; /* This adds space between the elements */
+    box-sizing: border-box; /* Padding and borders will be included in the element's total width */
+}
+
+#controls button {
+    padding: 10px; /* Adjust padding for better button sizing */
+    cursor: pointer; /* Change cursor to pointer when hovering over the button */
+}
