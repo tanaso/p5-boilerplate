@@ -1,18 +1,78 @@
 let cnv;  // Declare variable 'cnv'
 let img;  // Declare variable 'img'.
 
-let title;  // Declare variable 'title'.
-let titleFontSize;
-let titleFont;
-let titleX;
-let titleY;
-let titleColor;
-let titleStrokeWeight;
+let title = {
+    text: "Asakusa",
+    fontSize: 80,
+    font: "Noto Serif JP",
+    rightAlign: true,
+    vertical: false,
+    posX: 80,
+    posY: 510,
+    width: 420,
+    height: 100,
+    color: [0, 0, 0],
+    strokeWeight: 1
+};
 
-let description;  // Declare variable 'description'.
-let brand;  // Declare variable 'brand'.
-// let location;  // Declare variable 'location'.
-let date;  // Declare variable 'date'.
+let cordinate = {
+    text: "(3213123, 434234)",
+    fontSize: 20,
+    font: "Noto Serif JP",
+    rightAlign: true,
+    vertical: false,
+    posX: 80,
+    posY: 580,
+    width: 400,
+    height: 100,
+    color: [0, 0, 0],
+    strokeWeight: 1
+};
+
+let description = {
+    text: "Asakusa is a district in the Taitō ward of Tokyo, renowned for its blend of historical and modern Japanese culture. Central to Asakusa's identity is the Sensō-ji Temple, a revered Buddhist temple dedicated to the bodhisattva Kannon.",
+    fontSize: 20,
+    font: "Noto Serif JP",
+    rightAlign: true,
+    vertical: false,
+    posX: 80,
+    posY: 620,
+    width: 400,
+    height: 140,
+    color: [0, 0, 0],
+    strokeWeight: 1
+};
+let brand = {
+    text: "架空の日本",
+    fontSize: 60,
+    font: "Noto Serif JP",
+    rightAlign: false,
+    vertical: true,
+    posX: - 440,
+    posY: 15,
+    width: 100,
+    height: 100,
+    color: [0, 0, 0],
+    strokeWeight: 1
+};
+
+let vol = {
+    text: "# 1",
+    fontSize: 20,
+    font: "Noto Serif JP",
+    rightAlign: true,
+    vertical: false,
+    posX: 80,
+    posY: 780,
+    width: 400,
+    height: 200,
+    color: [0, 0, 0],
+    strokeWeight: 1
+};
+
+let objects = [title, cordinate, description, brand, vol];
+
+let date;
 let lowResCanvas;
 
 function preload() {
@@ -24,10 +84,6 @@ function setup() {
     cnv.parent('canvasContainer');
     cnv.style('border', '5px solid black');
 
-    title = "Asakusa";
-    description = "Asakusa is a district in the Taitō ward of Tokyo, renowned for its blend of historical and modern Japanese culture. Central to Asakusa's identity is the Sensō-ji Temple, a revered Buddhist temple dedicated to the bodhisattva Kannon, which is surrounded by several other temples and hosts various festivals like the Sanja Matsuri";
-    brand = "架空の日本";
-
     drawLowResCanvas();
 }
 
@@ -36,34 +92,41 @@ function draw() {
 }
 
 function drawLowResCanvas() {
-    console.log("Drawing low res canvas");
     background(255);
 
-    strokeWeight(1);  // Set the stroke thickness to 1
     if(img) {
         image(img, 80, 100, 400, 400);  // Display the image at position (50, 100)
     }
 
-    // Text
-    fill(0);
-    noStroke();
-    textFont('Noto Serif JP'); 
-    textSize(80);
-    textAlign(RIGHT);
-    text(title, 480, 600);
-    textSize(20);
-    text(description, 80, 620, 400, 100);
-    textSize(8);
-    text("#1", 470, 780);
+    // mapping objects
+    for (let i = 0; i < objects.length; i++) {
+        let obj = objects[i];
+        push();
+            // debug
+            // let randomColor = [random(255), random(255), random(255)];
+            // obj.color = randomColor;
 
-    // Vertical text
-    push();  // Save the current settings and transformations
-        translate(60, 450);  // Move to the point where you want to draw the text
-        textSize(60);
-        textAlign(LEFT);
-        rotate(- PI / 2);  // Rotate the coordinate system 90 degrees
-        text(brand, 0, 0);  // Draw the text
-    pop();  // Restore the settings and transformations
+            fill(obj.color);
+            strokeWeight(obj.strokeWeight);
+            textFont(obj.font);
+            textSize(obj.fontSize);
+            if(obj.rightAlign) {
+                textAlign(RIGHT);
+            }
+            else {
+                textAlign(LEFT);
+            }
+            if(obj.vertical) {
+                rotate(- PI / 2);
+            }
+            text(obj.text, obj.posX, obj.posY, obj.width, obj.height);
+            
+            // debug
+            // ellipse(obj.posX, obj.posY, 5)
+            // noFill()
+            // rect(obj.posX, obj.posY, obj.width, obj.height)
+        pop();
+    }
 }
 
 function windowResized() {
@@ -79,20 +142,38 @@ function getUpsclaedImage() {
     highResCanvas.background(255);
     
     if(img) {
-        highResCanvas.image(img, 150, 300, 1200, 1200);  // Display the image at position (50, 100)
+        highResCanvas.image(img, 240, 300, 1200, 1200);  // Display the image at position (50, 100)
     }
 
-    // Text
-    highResCanvas.strokeWeight(1);  // Set the stroke thickness to 1
-    highResCanvas.fill(0);
-    highResCanvas.noStroke();
-    highResCanvas.textFont('Noto Serif JP'); 
-    highResCanvas.textSize(300);
-    highResCanvas.text(title,150, 1800);
-    highResCanvas.textSize(60);
-    highResCanvas.text(description,150, 2100);
-    highResCanvas.textSize(36);
-    highResCanvas.text("by @mamorum", 150, 2200);
+    // mapping objects
+    for (let i = 0; i < objects.length; i++) {
+        let obj = objects[i];
+        highResCanvas.push();
+            // debug
+            // let randomColor = [random(255), random(255), random(255)];
+            // obj.color = randomColor;
+
+            highResCanvas.fill(obj.color);
+            highResCanvas.strokeWeight(obj.strokeWeight * 3);
+            highResCanvas.textFont(obj.font);
+            highResCanvas.textSize(obj.fontSize * 3);
+            if(obj.rightAlign) {
+                highResCanvas.textAlign(RIGHT);
+            }
+            else {
+                highResCanvas.textAlign(LEFT);
+            }
+            if(obj.vertical) {
+                highResCanvas.rotate(- PI / 2);
+            }
+            highResCanvas.text(obj.text, obj.posX * 3, obj.posY * 3, obj.width * 3, obj.height * 3);
+            
+            // debug
+            // highResCanvas.ellipse(obj.posX * 3, obj.posY * 3, 5)
+            // highResCanvas.noFill()
+            // highResCanvas.rect(obj.posX * 3, obj.posY * 3, obj.width * 3, obj.height * 3)
+        highResCanvas.pop();
+    }
 
     return highResCanvas;
 }
@@ -126,12 +207,12 @@ document.getElementById('saveButton').addEventListener('click', function(e) {
 
 // get title text from text input
 document.getElementById('title').addEventListener('change', function(e) {
-    title = e.target.value;
+    title.text = e.target.value;
 });
 
 // get description text from text input
 document.getElementById('description').addEventListener('change', function(e) {
-    description = e.target.value;
+    description.text = e.target.value;
 });
 
 // get location text from text input
@@ -141,7 +222,7 @@ document.getElementById('description').addEventListener('change', function(e) {
 
 // get brand text from text input
 document.getElementById('brand').addEventListener('change', function(e) {
-    brand = e.target.value;
+    brand.text = e.target.value;
 });
 
 
